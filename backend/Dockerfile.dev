@@ -1,0 +1,32 @@
+FROM node:18-alpine
+
+# Instalar OpenSSL (necesario para Prisma)
+RUN apk add --no-cache openssl libc6-compat
+
+WORKDIR /app
+
+# Copiar archivos de dependencias
+COPY package*.json ./
+COPY prisma ./prisma/
+COPY tsconfig.json ./
+
+# Instalar dependencias
+RUN npm install
+
+# Copiar TODO el código fuente (incluye src/)
+COPY . .
+
+# Generar Prisma Client
+RUN npx prisma generate
+
+# Compilar TypeScript
+RUN npm run build
+
+# Verificar que el archivo existe (para debugging)
+RUN ls -la /app/dist || echo "⚠️ dist folder not found!"
+RUN ls -la /app/dist/index.js || echo "⚠️ index.js not found!"
+
+EXPOSE 5000
+
+# Comando de inicio
+CMD ["node", "dist/index.js"]

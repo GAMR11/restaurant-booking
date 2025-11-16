@@ -1,0 +1,54 @@
+services:
+  # Servicio de Base de Datos PostgreSQL
+  restaurant-db:
+    image: postgres:15-alpine
+    restart: always
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    ports:
+      - "5432:5432"
+    volumes:
+      - restaurant-postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  # Servicio de Backend
+  restaurant-backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    restart: always
+    ports:
+      - "5000:5000"
+      - "5555:5555"  # Para Prisma Studio
+    environment:
+      DATABASE_URL: postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@restaurant-db:5432/${POSTGRES_DB}
+      PORT: 5000
+      GOOGLE_CLIENT_EMAIL: ${GOOGLE_CLIENT_EMAIL}
+      GOOGLE_PRIVATE_KEY: ${GOOGLE_PRIVATE_KEY}
+      GOOGLE_CALENDAR_ID: ${GOOGLE_CALENDAR_ID}
+      NODE_ENV: production
+    depends_on:
+      restaurant-db:
+        condition: service_healthy
+    # IMPORTANTE: No montamos volúmenes en /app para no destruir node_modules
+    command: sh -c "npm run setup-db && node dist/index.js"
+
+  # Servicio de Frontend
+  restaurant-frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    restart: always
+    ports:
+      - "80:80"
+    depends_on:
+      - restaurant-backend
+
+volumes:
+  restaurant-postgres-data:

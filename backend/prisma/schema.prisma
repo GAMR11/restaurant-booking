@@ -1,0 +1,76 @@
+generator client {
+  provider      = "prisma-client-js"
+  binaryTargets = ["native", "windows", "linux-musl-openssl-3.0.x"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Reservation {
+  id              String            @id @default(uuid())
+
+  // Información del cliente
+  customerName    String
+  customerEmail   String
+  customerPhone   String
+
+  // Detalles de la reserva
+  numberOfGuests  Int
+  reservationDate DateTime
+  reservationTime String            // "07:00", "24:00", etc.
+  // reservationEndTime String?  
+  reservationEndTime String? @db.Text         
+
+
+  // Opciones del restaurante
+  menuType        String            // "ejecutivo", "a_la_carta", "degustacion"
+  theme           String?           // "cumpleaños", "aniversario", "negocios", null
+  tablePreference String?           // "ventana", "terraza", "interior"
+
+  // Notas adicionales
+  specialRequests String?           @db.Text
+  dietaryRestrictions String?       @db.Text
+
+  // Integración con Google Calendar
+  googleEventId   String?           @unique
+
+  // Estado y metadatos
+  status          ReservationStatus @default(PENDING)
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+
+  @@index([reservationDate, reservationTime])
+  @@index([customerEmail])
+}
+
+enum ReservationStatus {
+  PENDING
+  CONFIRMED
+  CANCELLED
+  COMPLETED
+}
+
+model BlockedDate {
+  id        String   @id @default(uuid())
+  date      DateTime @unique
+  reason    String
+  createdAt DateTime @default(now())
+}
+
+model RestaurantSettings {
+  id                   String @id @default(uuid())
+  maxGuestsPerSlot     Int    @default(10)      // Ajustado para coincidir con el seed
+  slotDuration         Int    @default(30)      // Ajustado para coincidir con el seed
+  openingTime          String @default("07:00") // Ajustado para coincidir con el seed
+  closingTime          String @default("24:00") // Ajustado para coincidir con el seed
+  daysAdvanceBooking   Int    @default(90)      // Ajustado para coincidir con el seed
+}
+
+// ** ESTE ES EL MODELO FALTANTE QUE CAUSABA EL ERROR EN EL SEED **
+model Table {
+  id       String @id @default(uuid())
+  number   Int    @unique // Número de mesa
+  capacity Int    // Capacidad de la mesa (ej: 4, 6, 8 personas)
+}
