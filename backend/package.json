@@ -1,18 +1,21 @@
 {
   "name": "restaurant-backend",
   "version": "1.0.0",
-  "scripts": {
-    "dev": "nodemon src/index.ts",
-    "build": "tsc",
-    "start": "node dist/index.js",
-    "prisma:generate": "prisma generate",
-    "prisma:migrate": "prisma migrate dev",
-    "prisma:studio": "prisma studio",
-    "seed": "ts-node prisma/seed.ts",
-    "setup-db": "npx prisma db push --skip-generate && npm run seed",
-    "deploy": "npx prisma migrate deploy && npx prisma generate && npm run seed && npm start",
-    "railway:start": "npx prisma migrate deploy && node dist/index.js"
-  },
+  
+    "scripts": {
+      "dev": "nodemon src/index.ts",
+      "build": "tsc",
+      "start": "node dist/index.js",
+      "prisma:generate": "prisma generate",
+      "prisma:migrate": "prisma migrate dev",
+      "prisma:studio": "prisma studio",
+      "seed": "node dist/prisma/seed.js",
+      "seed:dev": "ts-node prisma/seed.ts",
+      "setup-db": "npx prisma db push --skip-generate && npm run seed",
+      "deploy": "npx prisma migrate deploy && npx prisma generate && npm run seed && npm start",
+      "railway:start": "npx prisma migrate deploy && node dist/index.js"
+    },
+  
   "dependencies": {
     "@prisma/client": "^6.19.0",
     "cors": "^2.8.5",
