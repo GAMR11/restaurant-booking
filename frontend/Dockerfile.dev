@@ -1,0 +1,19 @@
+FROM node:18-alpine
+
+WORKDIR /app
+
+# Instalar dependencias
+COPY package*.json ./
+RUN npm install
+
+# Copiar configuraciones de Tailwind
+COPY tailwind.config.js ./
+COPY postcss.config.js ./
+
+# Copiar el resto
+COPY . .
+
+EXPOSE 3000
+
+# Limpiar caché y ejecutar
+CMD ["sh", "-c", "npm start"]
