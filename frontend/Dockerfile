@@ -8,12 +8,21 @@ RUN npm ci
 COPY . .
 RUN npm run build
 
-# Nginx para servir la aplicación
+# Nginx
 FROM nginx:alpine
 
+# Copiar build
 COPY --from=build /app/build /usr/share/nginx/html
-COPY nginx.conf /etc/nginx/conf.d/default.conf
 
+# Crear configuración inline
+RUN echo 'server { \
+    listen 80; \
+    root /usr/share/nginx/html; \
+    index index.html; \
+    location / { \
+        try_files $uri $uri/ /index.html; \
+    } \
+}' > /etc/nginx/conf.d/default.conf
 
 EXPOSE 80
 
