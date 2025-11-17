@@ -14,7 +14,7 @@ const PORT = process.env.PORT || 5000;
 app.use(cors({
   origin: [
     'http://localhost:3000',
-    'front-restaurant-booking.railway.internal', // Agrega tu dominio de Railway
+    'front-restaurant-booking-production.up.railway.app', // Agrega tu dominio de Railway
     /\.up\.railway\.app$/  // Permite cualquier subdominio de Railway
   ],
   credentials: true
