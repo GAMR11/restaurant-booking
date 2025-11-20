@@ -9,11 +9,14 @@
     "prisma:generate": "prisma generate",
     "prisma:migrate": "prisma migrate dev",
     "prisma:studio": "prisma studio",
-    "seed": "node dist/prisma/seed.js",
-    "seed:dev": "ts-node prisma/seed.ts",
+    "seed": "ts-node prisma/seed.ts",
     "setup-db": "npx prisma db push --skip-generate && npm run seed",
     "deploy": "npx prisma migrate deploy && npx prisma generate && npm run seed && npm start",
     "railway:start": "npx prisma migrate deploy && node dist/index.js"
+  },
+  
+  "prisma": {
+    "seed": "ts-node prisma/seed.ts"
   },
   
   "dependencies": {
