@@ -28,19 +28,19 @@ async function main() {
 
   // 3. (Opcional, pero recomendado): Añadir una mesa de ejemplo para pruebas
   // CORRECCIÓN: Cambiamos a 'table' (singular) ya que definimos el modelo 'Table'
-  const existingTable = await prisma['table'].findFirst(); 
+  // const existingTable = await prisma['table'].findFirst(); 
 
-  if (!existingTable) {
-    await prisma['table'].create({
-      data: {
-        number: 10,
-        capacity: 4, // Mesa con capacidad para 4 personas
-      }
-    });
-    console.log('✅ Mesa de ejemplo insertada (Tabla 10).');
-  } else {
-     console.log('⏩ Mesa de ejemplo ya existe. Saltando el sembrado.');
-  }
+  // if (!existingTable) {
+  //   await prisma['table'].create({
+  //     data: {
+  //       number: 10,
+  //       capacity: 4, // Mesa con capacidad para 4 personas
+  //     }
+  //   });
+  //   console.log('✅ Mesa de ejemplo insertada (Tabla 10).');
+  // } else {
+  //    console.log('⏩ Mesa de ejemplo ya existe. Saltando el sembrado.');
+  // }
 
 
 }
