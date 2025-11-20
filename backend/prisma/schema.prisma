@@ -5,7 +5,7 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
+  url     = env("DATABASE_URL")
 }
 
 model Reservation {
@@ -69,8 +69,16 @@ model RestaurantSettings {
 }
 
 // ** ESTE ES EL MODELO FALTANTE QUE CAUSABA EL ERROR EN EL SEED **
+// model Table {
+//   id       String @id @default(uuid())
+//   number   Int    @unique // Número de mesa
+//   capacity Int    // Capacidad de la mesa (ej: 4, 6, 8 personas)
+// }
+
 model Table {
   id       String @id @default(uuid())
-  number   Int    @unique // Número de mesa
-  capacity Int    // Capacidad de la mesa (ej: 4, 6, 8 personas)
+  number   Int    @unique
+  capacity Int
+  
+  @@map("tables")
 }
