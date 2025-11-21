@@ -20,16 +20,19 @@ Sistema completo de gestión de reservas para restaurantes con integración a Go
 ![Booking Process](docs/screenshots/step1_restaurant_booking.png)
 
 ### Selección de Horario
-![Menu Selection](docs/screenshots/step2_restaurant_booking_complete.png)
+![Selección Horario](docs/screenshots/step2_restaurant_booking_complete.png)
 
 ### Selección de Menú
-![Menu Selection](docs/screenshots/step3_restaurant_booking.png)
+![Selección Menú](docs/screenshots/step3_restaurant_booking.png)
 
 ### Confirmación
-![Menu Selection](docs/screenshots/step4_restaurant_booking.png)
+![Confirmación](docs/screenshots/step4_restaurant_booking.png)
 
 ### TYP
-![Menu Selection](docs/screenshots/typ_restaurant_booking.png)
+![TYP](docs/screenshots/typ_restaurant_booking.png)
+
+### Agendamiento en Google Calendar
+![Google Calendar](docs/screenshots/googleCalendar.png)
 
 ---
 
