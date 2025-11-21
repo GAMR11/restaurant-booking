@@ -256,8 +256,10 @@ restaurant-booking/
    - Revisa todos los detalles
    - Confirma la reserva
 7. **Confirmación**
-   - Recibirás un email de confirmación
    - El evento se agregará a Google Calendar
+
+8. **Agendamiento en Google Calendar**
+   - El evento se podrá visualizar en la cuenta programada de Google Calendar
 
 ### Panel de Administración (Próximamente)
 
@@ -274,10 +276,6 @@ docker-compose exec backend npx prisma studio
 
 ```prisma
 Reservation       # Reservas de clientes
-├── DishCategory  # Categorías del menú
-├── Dish          # Platillos individuales
-└── ReservationDish  # Platillos por reserva
-
 RestaurantSettings  # Configuración global
 BlockedDate         # Fechas bloqueadas
 ```
